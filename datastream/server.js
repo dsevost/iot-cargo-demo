@@ -5,6 +5,9 @@ var WebSocket = require('ws');
 var WebSocketServer = WebSocket.Server;
 var http = require('http');
 
+var express = require('express');
+var app = express();
+
 var packages = [
   {
     pkgId: '0520 - ColdFire Parts',
@@ -63,11 +66,18 @@ var packages = [
 
 ]
 
-var server = http.createServer(function(request, response) {
+var server = http.createServer(app);
+//var server = http.createServer(function(request, response) {
+app.get('/', function(request, response) {
   console.log((new Date()) + ' Received request for ' + request.url);
-  response.writeHead(200, {'Content-Type': 'text/plain'});
-  response.write("Welcome to Node.js on OpenShift!\n\n");
-  response.end("Thanks for visiting us! \n");
+  response.writeHead(200, {'Content-Type': 'text/html'});
+  response.write("\
+    <h2>This is WebSocket based app</h2>\
+    <p>There are endpoint:\
+    <li>/stream - for sensors\' stream\
+    <li>/config - for configuration stream</p>\
+    <p>also environment configuration available via restfull /env endpoint<p>\n");
+  response.end("<p>Thanks for visiting us!</p>\n");
 });
 
 server.listen( port, ipaddress, function() {
@@ -158,8 +168,63 @@ new WebSocketServer({
   sendConfigStream(ws);
 });
 
+function getEnvironmentObj() {
+  return {
+//    { name: 'EDC_REST_ENDPOINT',
+      EDC_REST_ENDPOINT: process.env.EDC_REST_ENDPOINT,
+//      description: 'The Eurotech Device Cloud REST endpoint URL'
+//    },
+//    { name: 'EDC_USERNAME',
+      EDC_USERNAME: process.env.EDC_USERNAME,
+//      description: 'The Eurotech Device Cloud username/password to use when connecting to its REST endpoint.'
+//    },
+//    { name: 'EDC_PASSWORD',
+      EDC_PASSWORD: process.env.EDC_PASSWORD,
+//      description: 'The Eurotech Device Cloud username/password to use when connecting to its REST endpoint.'
+//    },
+//    { name: 'GOOGLE_MAPS_API_KEY',
+      GOOGLE_MAPS_API_KEY: process.GOOGLE_MAPS_API_KEY,
+//      description: 'Your Google Maps API Key'
+//    },
+//    { name: 'JDG_REST_ENDPOINT',
+      JDG_REST_ENDPOINT: process.GOOGLE_MAPS_API_KEY,
+//      description: 'A JBoss Data Grid REST endpoint URL use for storing/retrieving sensor configuration'
+//    }
+  };
+}
+
+/*
+function sendEnvironmentStream(ws) {
+  if (ws.readyState == WebSocket.CLOSING || ws.readyState == WebSocket.CLOSED) {
+    console.log("environment stream closed");
+    return;
+  }
+
+  if (ws.readyState == WebSocket.OPEN) {
+    ws.send(JSON.stringify(getEnvironmentObj()));
+  }
+
+  setTimeout(function () {
+    sendEnvironmentStream(ws);
+  }, 10000);
+
+}
+new WebSocketServer({
+  server: server,
+  path: "/env",
+  autoAcceptConnections: false
+}).on('connection', function(ws) {
+  console.log("New Environment connection, sending environment stream");
+  sendEnvironmentStream(ws);
+});
+*/
+
+app.get('/env', function(request, response) {
+    console.log("New Environment connection, sending environment stream");
+    response.writeHead(200, {'Content-Type': 'application/json'});
+    response.write(JSON.stringify(getEnvironmentObj()));
+    response.end();
+});
 
 
 console.log("Listening to " + ipaddress + ":" + port + "...");
-
-

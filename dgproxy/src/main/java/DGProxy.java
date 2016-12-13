@@ -38,8 +38,8 @@ public class DGProxy {
     public DGProxy() {
         ConfigurationBuilder builder = new ConfigurationBuilder();
         builder.addServer()
-              .host("localhost")
-              .port(11422);
+              .host(getRemoteServerName())
+              .port(getRemoteServerPort());
         cacheManager = new RemoteCacheManager(builder.build());
         cache = cacheManager.getCache("default");
     }
@@ -59,5 +59,29 @@ public class DGProxy {
 
     }
 
+    protected static final String REMOTE_SERVER_HOSTNAME="infinispan.client.hotrod.server.host";
+    protected String getRemoteServerName() {
+	String hostname = null;
+	hostname = System.getProperty(REMOTE_SERVER_HOSTNAME);
+	if (hostname == null) {
+	    hostname = System.getenv("REMOTE_SERVER_NAME");
+	}
+	if (hostname == null) {
+	    hostname = "localhost";
+	}
+	return hostname;
+    } 
 
+    protected static final String REMOTE_SERVER_PORT="infinispan.client.hotrod.server.port";
+    protected Integer getRemoteServerPort() {
+	Integer port = null;
+	port = System.getProperty(REMOTE_SERVER_PORT);
+	if (port == null) {
+	    port = System.getenv("REMOTE_SERVER_PORT");
+	}
+	if (port == null) {
+	    port = 11422;
+	}
+	return port;
+    } 
 }
