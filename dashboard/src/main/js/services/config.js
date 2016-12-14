@@ -108,7 +108,7 @@ angular.module('app')
 
             allShipmentPkgIds = [];
             currentShipments = [];
-            
+
             function offlineMode() {
                 offlineMode = true;
                 currentShipments = [

@@ -20,6 +20,7 @@ import javax.ws.rs.*;
 import org.infinispan.client.hotrod.configuration.*;
 import org.infinispan.client.hotrod.*;
 import javax.inject.Singleton;
+import java.util.logging.Logger;
 
 /**
  * A simple REST service which proxies requests to a local datagrid.
@@ -31,6 +32,7 @@ import javax.inject.Singleton;
 @Path("/")
 @Singleton
 public class DGProxy {
+    private static final Logger LOGGER = Logger.getLogger("DGProxy");
 
     private RemoteCacheManager cacheManager;
     private RemoteCache<String, String> cache;
@@ -40,6 +42,7 @@ public class DGProxy {
         builder.addServer()
               .host(getRemoteServerName())
               .port(getRemoteServerPort());
+	LOGGER.info(builder.getClass() + ": " + builder);
         cacheManager = new RemoteCacheManager(builder.build());
         cache = cacheManager.getCache("default");
     }
@@ -69,19 +72,21 @@ public class DGProxy {
 	if (hostname == null) {
 	    hostname = "localhost";
 	}
+	LOGGER.info("infinispan.client.hotrod.server.host/REMOTE_SERVER_NAME=" + hostname);
 	return hostname;
     } 
 
     protected static final String REMOTE_SERVER_PORT="infinispan.client.hotrod.server.port";
     protected Integer getRemoteServerPort() {
-	Integer port = null;
+	String port = null;
 	port = System.getProperty(REMOTE_SERVER_PORT);
 	if (port == null) {
 	    port = System.getenv("REMOTE_SERVER_PORT");
 	}
 	if (port == null) {
-	    port = 11422;
+	    port = "11422";
 	}
-	return port;
+	LOGGER.info("infinispan.client.hotrod.server.port/REMOTE_SERVER_PORT=" + port);
+	return Integer.valueOf(port);
     } 
 }
