@@ -2,8 +2,9 @@
 
 var module = angular.module('app', ['ngRoute', 'ui.bootstrap', 'patternfly', 'angular-websocket', 'ngMap', 'angular-rickshaw', 'angularMoment', 'frapontillo.bootstrap-switch']);
 
-angular.module('app')
 // TODO: Use JBoss SSO to properly protect app
+/*
+angular.module('app')
 .constant('APP_CONFIG', {
     EDC_USERNAME: '${EDC_USERNAME}',
     EDC_PASSWORD: '${EDC_PASSWORD}' ,
@@ -12,16 +13,10 @@ angular.module('app')
     GOOGLE_MAPS_API_KEY: '${GOOGLE_MAPS_API_KEY}',
     DEMO_ASSET: '${DEMO_ASSET}'
 });
-
-var init = function () {
-    $http({
-	method: 'GET',
-        url: APP_CONFIG.JDG_REST_ENDPOINT + '/rhiot/sensorConfig'
-    }).then(function (response) {
-	$log(response.data);
-    });
-};
-init();
+*/
+if(window){
+    Object.assign(APP_CONFIG, window.__env);
+}
 
 Rickshaw.namespace('Rickshaw.Graph.Renderer.Xkcd');
 

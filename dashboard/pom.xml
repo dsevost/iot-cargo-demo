@@ -48,9 +48,9 @@
             </resource>
         </resources>
 
-        <filters>
+        <!-- filters>
             <filter>app.properties</filter>
-        </filters>
+        </filters -->
 
         <plugins>
             <plugin>
