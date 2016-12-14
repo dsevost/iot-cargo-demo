@@ -9,7 +9,12 @@
   "homepage": "https://github.com/jamesfalkner",
   "dependencies": {},
   "devDependencies": {},
+  "scripts": {
+    "start": "node src/main/server.js"
+  },
   "engines": {
-    "node": ">=0.10.10"
+    "express": ">= 4.14.0",
+    "node": ">= 0.6.0",
+    "npm": ">= 1.0.0"
   }
 }
