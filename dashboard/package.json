@@ -7,10 +7,14 @@
   "private": true,
   "description": "EuroTech IoT Dashboard Demo",
   "homepage": "https://github.com/jamesfalkner",
-  "dependencies": {},
+  "dependencies": {
+    "socket.io" : "0.9.16",
+    "morgan" : "1.7.0",
+    "express": "4.14.0"
+  },
   "devDependencies": {},
   "scripts": {
-    "start": "node src/main/server.js"
+    "start": "node server.js"
   },
   "engines": {
     "express": ">= 4.14.0",

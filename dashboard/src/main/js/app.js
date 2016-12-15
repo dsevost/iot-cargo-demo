@@ -1,22 +1,14 @@
 'use strict';
 
+var APP_CONFIG = {};
+if(window){
+    Object.assign(APP_CONFIG, window.__APP_CONFIG);
+}
+
 var module = angular.module('app', ['ngRoute', 'ui.bootstrap', 'patternfly', 'angular-websocket', 'ngMap', 'angular-rickshaw', 'angularMoment', 'frapontillo.bootstrap-switch']);
 
 // TODO: Use JBoss SSO to properly protect app
-/*
-angular.module('app')
-.constant('APP_CONFIG', {
-    EDC_USERNAME: '${EDC_USERNAME}',
-    EDC_PASSWORD: '${EDC_PASSWORD}' ,
-    EDC_REST_ENDPOINT: '${EDC_REST_ENDPOINT}',
-    JDG_REST_ENDPOINT: '${JDG_REST_ENDPOINT}',
-    GOOGLE_MAPS_API_KEY: '${GOOGLE_MAPS_API_KEY}',
-    DEMO_ASSET: '${DEMO_ASSET}'
-});
-*/
-if(window){
-    Object.assign(APP_CONFIG, window.__env);
-}
+angular.module('app').constant('APP_CONFIG', APP_CONFIG);
 
 Rickshaw.namespace('Rickshaw.Graph.Renderer.Xkcd');
 

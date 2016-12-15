@@ -1,0 +1,48 @@
+#!/bin/bash
+
+#set -x
+
+SRC=/tmp/src
+
+VERBOSE="-v"
+VERBOSE=
+
+function move() {
+    [ -r "$SRC/$1" ] || return 
+
+    mv $VERBOSE /tmp/src/$1 .
+#    rm -ff /tmp/src/$1
+}
+
+function bower() {
+    [ -r bower.json ] || return 
+    npm install bower
+    cat > .bowerrc << EOF
+{
+  "directory": "vendor"
+}
+EOF
+
+    node_modules/bower/bin/bower install
+}
+
+move package.json
+move bower.json
+
+move src/main/server.js
+move src/main/css
+move src/main/js
+move src/main/resources/imgs
+move src/main/webapp/index.html
+move src/main/webapp/partials
+
+bower
+pushd vendor
+move src/main/rcue
+popd
+
+rm -rf $SRC/{.,}*
+touch $SRC/dummy.txt
+
+[ -x "$S2I_SCRIPTS_PATH/assemble" ] && { exec $S2I_SCRIPTS_PATH/assemble ; exit 0 ; }
+[ -x "$STI_SCRIPTS_PATH/assemble" ] && { exec $STI_SCRIPTS_PATH/assemble ; exit 0 ; }

@@ -1,0 +1,3 @@
+[submodule "dashboard/src/main/rcue"]
+	path = dashboard/src/main/rcue
+	url = https://github.com/redhat-rcue/rcue
