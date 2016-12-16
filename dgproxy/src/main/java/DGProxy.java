@@ -44,8 +44,9 @@ public class DGProxy {
               .port(getRemoteServerPort());
 	LOGGER.info(builder.getClass() + ": " + builder);
         cacheManager = new RemoteCacheManager(builder.build());
-        LOGGER.info("Cache manager status: " + cacheManager.getStatus());
-        LOGGER.info("Cache memners: " + cacheManager.getMembers());
+        if(cacheManager.isStarted() == false) {
+          cacheManager.start();
+        }
         cache = cacheManager.getCache("default");
 	LOGGER.info(cache.getClass() + ": " + cache.getName());
 	cache.put("key", "my-value");
