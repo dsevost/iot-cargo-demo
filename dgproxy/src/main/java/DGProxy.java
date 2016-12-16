@@ -52,7 +52,10 @@ public class DGProxy {
     @Path("/rhiot/{id}")
     @Produces({ "application/json" })
     public String rhiotGet(@PathParam("id") String id) {
-    	return cache.get(id);
+	System.out.println("requesting '" + id + "'");
+	String value = cache.get(id);
+	System.out.println("for key '" + id + "' value is: " + value);
+    	return value;
     }
 
     @PUT
