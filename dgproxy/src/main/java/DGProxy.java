@@ -45,6 +45,9 @@ public class DGProxy {
 	LOGGER.info(builder.getClass() + ": " + builder);
         cacheManager = new RemoteCacheManager(builder.build());
         cache = cacheManager.getCache("default");
+	LOGGER.info(cache.getClass() + ": " + cache.getName());
+	cache.put("key", "my-value");
+	LOGGER.info(cache.getClass() + ": get('key') = " + cache.ge("key"));
     }
 
 
