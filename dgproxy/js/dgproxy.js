@@ -48,6 +48,8 @@ router.route('/rhiot/:id')
         if(!result) {
 //          response.writeHead(404, {'Content-Type': 'text/plain'});
 //          response.end('Key "' + id + '" not found\n');
+          response.writeHead(200, {'Content-Type': 'applicaiton/json'});
+          response.end('');
           return;
         }
         response.writeHead(200, {'Content-Type': 'applicaiton/json'});
