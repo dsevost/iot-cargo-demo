@@ -46,8 +46,8 @@ router.route('/rhiot/:id')
       function(result) {
         console.log('get:route(/rhiot/:' + id + ') = ' + result);
         if(!result) {
-          response.writeHead(404, {'Content-Type': 'text/plain'});
-          response.end('Key "' + id + '" not found\n');
+//          response.writeHead(404, {'Content-Type': 'text/plain'});
+//          response.end('Key "' + id + '" not found\n');
           return;
         }
         response.writeHead(200, {'Content-Type': 'applicaiton/json'});
