@@ -41,10 +41,10 @@ app.use('/dgproxy/rest', router);
 router.route('/rhiot/:id')
   .get(function(request, response) {
     var id = request.params.id;
-    console.log('route(/rhiot/:' + id + ')');
+    console.log('get:route(/rhiot/:' + id + ')');
     jdgClient.get(request.params.id).then(
       function(result) {
-        console.log('route(/rhiot/:' + id + ') = ' + result);
+        console.log('get:route(/rhiot/:' + id + ') = ' + result);
         if(!result) {
           response.writeHead(404, {'Content-Type': 'text/plain'});
           response.end('Key "' + id + '" not found\n');
@@ -54,6 +54,20 @@ router.route('/rhiot/:id')
         response.write(result);
         response.end('\n');
       })
-  });
-//  .put(function(request, response) {
-//  })
+  })
+  .put(function(request, response) {
+    var id = request.params.id;
+    console.log('put:/route(/rhiot/:' + id + ')');
+    jdgClient.put(request.params.id, request.body).then(
+      function(result) {
+        console.log('get:route(/rhiot/:' + id + ') = ' + result);
+        if(!result) {
+          response.writeHead(403, {'Content-Type': 'text/plain'});
+          response.end('Upload for key "' + id + '" failed ' + result + '\n');
+          return;
+        }
+        response.writeHead(200, {'Content-Type': 'applicaiton/json'});
+        response.end('{}\n');
+      })
+  })
+;
