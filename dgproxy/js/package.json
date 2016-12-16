@@ -8,8 +8,9 @@
   "description": "EuroTech IoT Dashboard Demo",
   "homepage": "https://github.com/dsevost/iot-cargo-demo",
   "dependencies": {
-    "morgan" : "1.7.0",
-    "express": "4.14.0"
+    "express": "4.14.0",
+    "infinispan": "0.3.0",
+    "morgan" : "1.7.0"
   },
   "devDependencies": {},
   "scripts": {
