@@ -60,6 +60,7 @@ router.route('/rhiot/:id')
   .put(function(request, response) {
     var id = request.params.id;
     console.log('put:/route(/rhiot/:' + id + ')');
+    console.log('put:/route(/rhiot/:' + id + '), body: ' + request);
     jdgClient.put(request.params.id, request.body).then(
       function(result) {
         console.log('get:route(/rhiot/:' + id + ') = ' + result);
