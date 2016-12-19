@@ -85,6 +85,9 @@ function convertToText(obj) {
     //    I am checking to see if they have the property
     //    join, which normal objects don't have but
     //    arrays do.
+    if (obj == undefined || obj == null) {
+	return null;
+    }
     if (typeof(obj) == "object" && (obj.join == undefined)) {
         string.push("{");
         for (prop in obj) {
